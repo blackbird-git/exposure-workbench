@@ -20,6 +20,8 @@ breaking application functionality.
   numeric permissions, and permissions along the full path.
 - Built a read-only network inventory script that reports interface
   addresses and TCP and UDP listeners.
+- Built a collector that runs the checks over SSH, saves a local report,
+  and continues collecting evidence when an individual check fails.
 
 ## Current scope
 
@@ -87,3 +89,18 @@ The script reports interface addresses and listening TCP and UDP
 sockets. Process details may be incomplete when run without elevated
 privileges. A listener alone does not establish external reachability;
 routing, firewalls, and network configuration also matter.
+
+## Collect an evidence report
+
+From the project root, run:
+
+```bash
+bash scripts/collect-report.sh
+```
+
+The collector runs the service, file, and network checks over SSH and
+writes the results to `report.txt`. It continues after an individual
+check fails and returns a nonzero exit status if any check failed.
+
+The current target is configured in the script. Each run replaces the
+previous report. Generated reports are excluded from Git.
