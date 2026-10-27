@@ -16,6 +16,8 @@ breaking application functionality.
   from serving its page, then restored access and verified the response.
 - Built a read-only service assessment script that reports systemd state,
   the configured user, and the main process owner.
+- Built a read-only file assessment script that reports ownership,
+  numeric permissions, and permissions along the full path.
 
 ## Current scope
 
@@ -51,3 +53,22 @@ ssh ilyam@192.168.170.128 'bash -s -- ssh.service' < scripts/check-service.sh
 The script collects evidence; it does not determine whether a service's
 privileges are appropriate. It reports when the unit is not found or
 when systemd has no main process recorded.
+
+## File assessment script
+
+From the project root, run the script against the lab VM:
+
+```bash
+ssh ilyam@192.168.170.128 'bash -s' < scripts/check-file.sh
+```
+
+The script defaults to `/opt/exposure-demo/index.html`. To inspect
+another path on the VM, pass it as an argument:
+
+```bash
+ssh ilyam@192.168.170.128 \
+  'bash -s -- /opt/exposure-demo' < scripts/check-file.sh
+```
+
+The script reports ownership and permissions. Assessing whether those
+permissions are appropriate requires context about the file and its use.
