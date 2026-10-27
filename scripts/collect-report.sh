@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-target="ilyam@192.168.170.128"
+target="${1:-ilyam@192.168.170.128}"
 report="report.txt"
 failed=0
 
@@ -19,6 +19,7 @@ run_check() {
 }
 
 {
+    printf 'Target: %s\n' "$target"
     run_check "Service" "scripts/check-service.sh"
     run_check "File permissions" "scripts/check-file.sh"
     run_check "Network listeners" "scripts/check-listeners.sh"

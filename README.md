@@ -98,6 +98,15 @@ From the project root, run:
 bash scripts/collect-report.sh
 ```
 
+The collector defaults to the lab VM. To specify another SSH target:
+
+```bash
+bash scripts/collect-report.sh user@host
+```
+
+The target must be accessible over SSH. The service and file checks
+still use the demo service and path unless those scripts are changed.
+
 The collector runs the service, file, and network checks over SSH and
 writes the results to `report.txt`. It continues after an individual
 check fails and returns a nonzero exit status if any check failed.
