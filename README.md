@@ -14,6 +14,8 @@ breaking application functionality.
 - Examined SSH privilege separation as an example of legitimate root usage.
 - Investigated a file-permission change that prevented the running service
   from serving its page, then restored access and verified the response.
+- Built a read-only service assessment script that reports systemd state,
+  the configured user, and the main process owner.
 
 ## Current scope
 
@@ -30,3 +32,22 @@ Automated assessment and reporting are the next milestone.
 
 - [Service privileges](scenarios/service-privileges/README.md)
 - [File permissions](scenarios/file-permissions/README.md)
+
+## Service assessment script
+
+Run the script from WSL against the lab VM:
+
+```bash
+ssh ilyam@192.168.170.128 'bash -s' < scripts/check-service.sh
+```
+
+The script defaults to `exposure-demo.service`. To check another service,
+pass its name as an argument:
+
+```bash
+ssh ilyam@192.168.170.128 'bash -s -- ssh.service' < scripts/check-service.sh
+```
+
+The script collects evidence; it does not determine whether a service's
+privileges are appropriate. It reports when the unit is not found or
+when systemd has no main process recorded.
