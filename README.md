@@ -18,6 +18,8 @@ breaking application functionality.
   the configured user, and the main process owner.
 - Built a read-only file assessment script that reports ownership,
   numeric permissions, and permissions along the full path.
+- Built a read-only network inventory script that reports interface
+  addresses and TCP and UDP listeners.
 
 ## Current scope
 
@@ -72,3 +74,16 @@ ssh ilyam@192.168.170.128 \
 
 The script reports ownership and permissions. Assessing whether those
 permissions are appropriate requires context about the file and its use.
+
+## Network listener inventory
+
+From the project root, run the script against the lab VM:
+
+```bash
+ssh ilyam@192.168.170.128 'bash -s' < scripts/check-listeners.sh
+```
+
+The script reports interface addresses and listening TCP and UDP
+sockets. Process details may be incomplete when run without elevated
+privileges. A listener alone does not establish external reachability;
+routing, firewalls, and network configuration also matter.
