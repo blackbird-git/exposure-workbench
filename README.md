@@ -92,24 +92,42 @@ routing, firewalls, and network configuration also matter.
 
 ## Collect an evidence report
 
-From the project root, run:
+From the project root, run with the lab defaults:
 
 ```bash
 bash scripts/collect-report.sh
 ```
 
-The collector defaults to the lab VM. To specify another SSH target:
+Or specify the SSH target, systemd service, and remote path:
 
 ```bash
-bash scripts/collect-report.sh user@host
+bash scripts/collect-report.sh user@host ssh.service /tmp
 ```
 
-The target must be accessible over SSH. The service and file checks
-still use the demo service and path unless those scripts are changed.
+Arguments are positional: target first, service second, and path third.
+The collector accepts simple service names and paths containing letters,
+numbers, underscores, periods, slashes, `@`, colons, and hyphens. Paths
+containing spaces are not currently supported.
 
-The collector runs the service, file, and network checks over SSH and
-writes the results to `report.txt`. It continues after an individual
-check fails and returns a nonzero exit status if any check failed.
+The collector saves output to `report.txt`, replacing the previous report.
+It continues after an individual check fails and returns a nonzero exit
+status if any check failed. Generated reports are excluded from Git.
 
-The current target is configured in the script. Each run replaces the
-previous report. Generated reports are excluded from Git.
+
+## Networking Troubleshooting Lab
+
+Completed a hands-on TCP connectivity troubleshooting lab using WSL Ubuntu and an Ubuntu VM.
+
+Practiced:
+
+- Inspecting TCP listeners and established connections with `ss`
+- Capturing TCP handshakes and retransmissions using `tcpdump`
+- Testing connectivity with `nc`
+- Diagnosing connection refusals versus timeouts
+- Creating and removing temporary firewall DROP rules using `iptables`
+- Correlating packet captures with firewall counters
+- Investigating routing and NAT behavior
+
+Successfully reproduced and diagnosed three TCP connection outcomes: successful connection, connection refused, and connection timeout.
+
+See [TCP Connectivity Troubleshooting Lab](docs/tcp-troubleshooting.md) for commands, observations, and troubleshooting methodology.
